@@ -5,19 +5,25 @@
 <div class="boat-megamenu-wrapper">
   <div class="boat-megamenu-grid">
     {% if link_count > 0 %}
+      {% assign seen_titles = '' %}
       {% for link in parent_link.links %}
-        <a href="{{ link.url }}" class="boat-megamenu-card">
-          <div class="boat-megamenu-avatar">
-            {% if link.type == 'collection_link' and link.object.featured_image != blank %}
-              <img src="{{ link.object.featured_image | image_url: width: 100 }}" alt="{{ link.title | escape }}" loading="lazy" width="44" height="44">
-            {% elsif link.type == 'product_link' and link.object.featured_image != blank %}
-              <img src="{{ link.object.featured_image | image_url: width: 100 }}" alt="{{ link.title | escape }}" loading="lazy" width="44" height="44">
-            {% else %}
-              <span style="font-size: 1.3rem;">📱</span>
-            {% endif %}
-          </div>
-          <span class="boat-megamenu-title">{{ link.title }}</span>
-        </a>
+        {% assign title_check = link.title | downcase | strip %}
+        {% assign check_tag = '|' | append: title_check | append: '|' %}
+        {% unless seen_titles contains check_tag %}
+          {% assign seen_titles = seen_titles | append: check_tag %}
+          <a href="{{ link.url }}" class="boat-megamenu-card">
+            <div class="boat-megamenu-avatar">
+              {% if link.type == 'collection_link' and link.object.featured_image != blank %}
+                <img src="{{ link.object.featured_image | image_url: width: 120 }}" alt="{{ link.title | escape }}" loading="lazy" width="44" height="44">
+              {% elsif link.type == 'product_link' and link.object.featured_image != blank %}
+                <img src="{{ link.object.featured_image | image_url: width: 120 }}" alt="{{ link.title | escape }}" loading="lazy" width="44" height="44">
+              {% else %}
+                <span style="font-size: 1.3rem;">📱</span>
+              {% endif %}
+            </div>
+            <span class="boat-megamenu-title">{{ link.title }}</span>
+          </a>
+        {% endunless %}
       {% endfor %}
     {% else %}
       {% comment %} --- SAME TO SAME boAt Category Items (Matching Screenshot) --- {% endcomment %}
