@@ -89,7 +89,7 @@
         "underline_word": "You",
         "collection": "",
         "enable_desktop_slider": true,
-        "max_products": 6,
+        "max_products": 16,
         "columns_desktop": 6,
         "card_gap": 12,
         "card_radius": 16,
@@ -97,7 +97,7 @@
         "view_all_link": "shopify://collections/all",
         "max_products_mobile": 4,
         "columns_mobile": "2",
-        "enable_mobile_slider": false,
+        "enable_mobile_slider": true,
         "padding_top": 36,
         "padding_bottom": 36
       }
