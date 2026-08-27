@@ -129,8 +129,8 @@
       </div>
 
       {% comment %} --- Dynamic Smart Swatches (Color Dots / Size Pills) --- {% endcomment %}
-      {% if product.variants.size > 1 %}
-        <div class="boat-pick-card__swatches">
+      <div class="boat-pick-card__swatches">
+        {% if product.variants.size > 1 %}
           {% assign swatch_count = 0 %}
           {% for option in product.options_with_values %}
             {% assign downcased_option = option.name | downcase %}
@@ -201,8 +201,8 @@
           {% if product.variants.size > 3 %}
             <span class="boat-swatch-more">+{{ product.variants.size | minus: 3 }}</span>
           {% endif %}
-        </div>
-      {% endif %}
+        {% endif %}
+      </div>
     </div>
   </div>
 </div>

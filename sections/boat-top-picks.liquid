@@ -264,6 +264,10 @@
   }
 
   /* --- Compact Card Container & Hover Effects --- */
+  .boat-top-picks__grid {
+    align-items: stretch !important;
+  }
+
   .boat-pick-card {
     background: #ffffff;
     border-radius: {{ card_radius }}px;
@@ -274,6 +278,8 @@
     flex-direction: column;
     position: relative;
     transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    height: 100%;
+    flex: 1 1 auto;
   }
 
   .boat-pick-card:hover {
@@ -392,6 +398,8 @@
     justify-content: space-between;
     width: 100%;
     letter-spacing: -0.2px;
+    height: 26px;
+    box-sizing: border-box;
   }
 
   .boat-pick-card__rating {
@@ -414,6 +422,7 @@
     flex-direction: column;
     flex-grow: 1;
     justify-content: space-between;
+    gap: 6px;
   }
 
   .boat-pick-card__title {
@@ -422,12 +431,13 @@
     color: #0f172a;
     font-family: 'Plus Jakarta Sans', sans-serif;
     line-height: 1.3;
-    margin: 0 0 6px 0;
+    margin: 0 0 4px 0;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-decoration: none;
+    min-height: 2.3rem; /* Enforce 2-line height alignment for all cards */
   }
   .boat-pick-card__title:hover {
     color: #d8232a;
@@ -442,6 +452,7 @@
     margin-top: auto;
     padding-top: 5px;
     border-top: 1px dashed #e2e8f0;
+    min-height: 26px;
   }
 
   .boat-pick-card__price-wrap {
@@ -480,6 +491,7 @@
     font-size: 0.7rem;
     font-weight: 700;
     color: #64748b;
+    min-height: 18px; /* Reserve swatches space on cards without swatches */
   }
 
   .boat-swatch-dot {
