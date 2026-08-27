@@ -76,14 +76,14 @@
           "type": "tab_block",
           "settings": {
             "tab_title": "Personalisation",
-            "collection": "all"
+            "collection": "kidsmart"
           }
         },
         "tab_block_zKkCUj": {
           "type": "tab_block",
           "settings": {
             "tab_title": "New Launches",
-            "collection": "all"
+            "collection": "appliances"
           }
         }
       },
