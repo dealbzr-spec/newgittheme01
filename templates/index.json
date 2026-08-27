@@ -78,11 +78,19 @@
             "tab_title": "Personalisation",
             "collection": "all"
           }
+        },
+        "tab_block_zKkCUj": {
+          "type": "tab_block",
+          "settings": {
+            "tab_title": "New Launches",
+            "collection": "all"
+          }
         }
       },
       "block_order": [
         "tab_1",
-        "tab_2"
+        "tab_2",
+        "tab_block_zKkCUj"
       ],
       "settings": {
         "title": "Top Picks For You",
@@ -97,7 +105,7 @@
         "view_all_link": "shopify://collections/all",
         "max_products_mobile": 4,
         "columns_mobile": "2",
-        "enable_mobile_slider": true,
+        "enable_mobile_slider": false,
         "padding_top": 36,
         "padding_bottom": 36
       }
