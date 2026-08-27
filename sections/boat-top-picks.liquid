@@ -679,21 +679,38 @@
         const sections = responseData.sections || {};
         const drawerHtml = sections['cart-drawer-section'];
 
-        // 1. Synchronously update Cart Drawer DOM
+        // 1. Smoothly update Cart Drawer DOM without wiping shell/header (Zero Flicker / No Jhatka)
         if (drawerHtml) {
-          const drawerSectionId = 'shopify-section-cart-drawer-section';
-          const drawerElement = document.getElementById(drawerSectionId);
-          if (drawerElement) {
+          const liveSection = document.getElementById('shopify-section-cart-drawer-section');
+          if (liveSection) {
             const parser = new DOMParser();
             const doc = parser.parseFromString(drawerHtml, 'text/html');
-            const newContent = doc.getElementById(drawerSectionId);
-            if (newContent) {
-              const curComp = drawerElement.querySelector('cart-drawer-component');
-              const newComp = newContent.querySelector('cart-drawer-component');
-              if (curComp && newComp) {
-                curComp.innerHTML = newComp.innerHTML;
-              } else {
-                drawerElement.innerHTML = newContent.innerHTML;
+            const newSection = doc.getElementById('shopify-section-cart-drawer-section');
+            if (newSection) {
+              const liveInner = liveSection.querySelector('.cart-drawer__inner');
+              const newInner = newSection.querySelector('.cart-drawer__inner');
+
+              if (liveInner && newInner) {
+                if (liveInner.classList.contains('cart-drawer--empty')) {
+                  // Transition from empty cart state to active cart state
+                  liveInner.replaceWith(newInner);
+                } else {
+                  // Update items list and summary only — preserves drawer header & dialog shell (no jhatka)
+                  const liveItems = liveSection.querySelector('.cart-drawer__items');
+                  const newItems = newSection.querySelector('.cart-drawer__items');
+                  if (liveItems && newItems) {
+                    liveItems.innerHTML = newItems.innerHTML;
+                  }
+
+                  const liveSummary = liveSection.querySelector('.cart-drawer__summary');
+                  const newSummary = newSection.querySelector('.cart-drawer__summary');
+                  if (liveSummary && newSummary) {
+                    liveSummary.innerHTML = newSummary.innerHTML;
+                  } else if (!liveSummary && newSummary) {
+                    const contentContainer = liveSection.querySelector('.cart-drawer__content');
+                    if (contentContainer) contentContainer.appendChild(newSummary);
+                  }
+                }
               }
             }
           }
