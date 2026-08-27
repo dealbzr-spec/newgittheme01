@@ -10,6 +10,11 @@
   assign enable_desktop_slider = section.settings.enable_desktop_slider
   assign card_gap = section.settings.card_gap | default: 12
   assign card_radius = section.settings.card_radius | default: 16
+
+  # Mobile Customization Settings
+  assign max_products_mobile = section.settings.max_products_mobile | default: 6
+  assign columns_mobile = section.settings.columns_mobile | default: '2'
+  assign enable_mobile_slider = section.settings.enable_mobile_slider
 %}
 
 <style>
@@ -209,14 +214,53 @@
     right: -18px;
   }
 
+  .boat-pick-card-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+  }
+
   @media (max-width: 768px) {
+    .boat-hide-mobile {
+      display: none !important;
+    }
+
     .boat-top-picks__slider-nav {
       display: none !important;
     }
-    .boat-top-picks__grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-      gap: 0.65rem !important;
-    }
+
+    {% if enable_mobile_slider %}
+      .boat-top-picks__grid {
+        display: flex !important;
+        grid-template-columns: none !important;
+        overflow-x: auto !important;
+        scroll-snap-type: x mandatory !important;
+        scroll-behavior: smooth !important;
+        scrollbar-width: none !important;
+        padding-bottom: 12px !important;
+        gap: 0.75rem !important;
+      }
+      .boat-top-picks__grid::-webkit-scrollbar {
+        display: none !important;
+      }
+      .boat-top-picks__grid > * {
+        {% if columns_mobile == '1' or columns_mobile == 1 %}
+          flex: 0 0 calc(86% - 0.5rem) !important;
+          min-width: calc(86% - 0.5rem) !important;
+        {% else %}
+          flex: 0 0 calc(52% - 0.4rem) !important;
+          min-width: calc(52% - 0.4rem) !important;
+        {% endif %}
+        scroll-snap-align: start !important;
+      }
+    {% else %}
+      .boat-top-picks__grid {
+        display: grid !important;
+        grid-template-columns: repeat({{ columns_mobile }}, minmax(0, 1fr)) !important;
+        gap: 0.65rem !important;
+      }
+    {% endif %}
   }
 
   /* --- Compact Card Container & Hover Effects --- */
@@ -537,11 +581,15 @@
           <div class="boat-top-picks__grid" id="BoatGrid-{{ section.id }}-{{ block.id }}">
             {% if current_collection != blank and current_collection.products.size > 0 %}
               {% for product in current_collection.products limit: max_products %}
-                {% render 'boat-product-card-item', product: product, section_settings: section.settings %}
+                <div class="boat-pick-card-wrapper{% if forloop.index > max_products_mobile %} boat-hide-mobile{% endif %}">
+                  {% render 'boat-product-card-item', product: product, section_settings: section.settings %}
+                </div>
               {% endfor %}
             {% else %}
               {% for i in (1..max_products) %}
-                {% render 'boat-product-card-demo', index: i %}
+                <div class="boat-pick-card-wrapper{% if forloop.index > max_products_mobile %} boat-hide-mobile{% endif %}">
+                  {% render 'boat-product-card-demo', index: i %}
+                </div>
               {% endfor %}
             {% endif %}
           </div>
@@ -554,11 +602,15 @@
       <div class="boat-top-picks__grid" id="BoatGrid-{{ section.id }}-default">
         {% if current_collection != blank and current_collection.products.size > 0 %}
           {% for product in current_collection.products limit: max_products %}
-            {% render 'boat-product-card-item', product: product, section_settings: section.settings %}
+            <div class="boat-pick-card-wrapper{% if forloop.index > max_products_mobile %} boat-hide-mobile{% endif %}">
+              {% render 'boat-product-card-item', product: product, section_settings: section.settings %}
+            </div>
           {% endfor %}
         {% else %}
           {% for i in (1..max_products) %}
-            {% render 'boat-product-card-demo', index: i %}
+            <div class="boat-pick-card-wrapper{% if forloop.index > max_products_mobile %} boat-hide-mobile{% endif %}">
+              {% render 'boat-product-card-demo', index: i %}
+            </div>
           {% endfor %}
         {% endif %}
       </div>
@@ -936,6 +988,41 @@
       "type": "url",
       "id": "view_all_link",
       "label": "View All Button Link"
+    },
+    {
+      "type": "header",
+      "content": "📱 Mobile Layout Settings"
+    },
+    {
+      "type": "range",
+      "id": "max_products_mobile",
+      "label": "Maximum Products to Show on Mobile",
+      "min": 2,
+      "max": 16,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Mobile Grid Columns",
+      "options": [
+        {
+          "value": "1",
+          "label": "1 Column (Single Card)"
+        },
+        {
+          "value": "2",
+          "label": "2 Columns (Grid)"
+        }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_mobile_slider",
+      "label": "Enable Mobile Horizontal Slider / Carousel",
+      "default": false
     },
     {
       "type": "header",
