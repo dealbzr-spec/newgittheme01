@@ -117,8 +117,8 @@
   <div class="boat-pick-card__details">
     <a href="{{ product.url }}" class="boat-pick-card__title">{{ product.title }}</a>
 
-    <div class="boat-pick-card__price-row">
-      <div class="boat-pick-card__price-wrap">
+    <div class="boat-pick-card__footer">
+      <div class="boat-pick-card__price-row">
         <span class="boat-pick-card__price">{{ price | money }}</span>
         <span class="boat-pick-card__compare-price" style="{% unless compare_price > price %}display:none;{% endunless %}">
           {% if compare_price > price %}{{ compare_price | money }}{% endif %}
