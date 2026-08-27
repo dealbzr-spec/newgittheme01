@@ -59,7 +59,7 @@
         "enable_mobile_category_autoplay": true,
         "mobile_category_autoplay_speed": 3,
         "sidebar_heading": "TOP CATEGORIES",
-        "sidebar_menu": ""
+        "sidebar_menu": "categories"
       }
     },
     "boat_top_picks_main": {
