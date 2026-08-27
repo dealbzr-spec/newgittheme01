@@ -809,18 +809,7 @@
           });
         }
 
-        // 3. INSTANTLY OPEN THE CART DRAWER (0ms delay)
-        if (themeDrawer) {
-          if (typeof themeDrawer.open === 'function') {
-            themeDrawer.open();
-          } else {
-            themeDrawer.setAttribute('open', '');
-            const dialog = themeDrawer.querySelector('dialog');
-            if (dialog && typeof dialog.showModal === 'function' && !dialog.open) {
-              dialog.showModal();
-            }
-          }
-        }
+        // 3. (Auto-open disabled per user request: cart updates silently & badge updates in real-time)
 
         // 4. Non-blocking background sync for global events
         (async () => {
