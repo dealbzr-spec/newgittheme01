@@ -195,7 +195,7 @@ header.header,
   }
 }
 
-/* --- SAME TO SAME boAt Mega Menu (Auto Dynamic Height, No Bottom Border/Shadow) --- */
+/* --- SAME TO SAME boAt Mega Menu (With Bottom Border Line & Centered Collections) --- */
 .menu-list__submenu {
   position: absolute !important;
   left: 0 !important;
@@ -206,13 +206,13 @@ header.header,
   background: #ffffff !important;
   background-color: #ffffff !important;
   border-top: 1px solid #e5e7eb !important;
-  border-bottom: none !important;
+  border-bottom: 1px solid #e5e7eb !important;
   border-left: none !important;
   border-right: none !important;
-  box-shadow: none !important;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06) !important;
   filter: none !important;
   outline: none !important;
-  padding: 24px 0 36px 0 !important;
+  padding: 24px 0 32px 0 !important;
   margin-top: 0 !important;
   z-index: 9999999 !important;
   box-sizing: border-box !important;
@@ -243,27 +243,31 @@ header.header,
   box-sizing: border-box !important;
   width: 100% !important;
   height: auto !important;
+  display: flex !important;
+  justify-content: center !important;
 }
 
-/* --- SAME TO SAME boAt Mega Menu (SS2 UI) --- */
 .mega-menu__grid,
 .boat-megamenu-wrapper {
-  display: block !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
   width: 100% !important;
-  max-width: 1400px !important;
+  max-width: 1280px !important;
   margin: 0 auto !important;
-  padding: 0 40px !important;
+  padding: 0 24px !important;
   box-sizing: border-box !important;
 }
 
 .boat-megamenu-grid {
-  display: grid !important;
-  grid-template-columns: repeat(5, 1fr) !important;
-  gap: 20px 32px !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: center !important;
   align-items: center !important;
+  gap: 20px 36px !important;
   list-style: none !important;
-  margin: 0 !important;
-  padding: 24px 0 32px 0 !important;
+  margin: 0 auto !important;
+  padding: 12px 0 16px 0 !important;
   width: 100% !important;
   background: transparent !important;
   border: none !important;
@@ -271,24 +275,12 @@ header.header,
   box-sizing: border-box !important;
 }
 
-@media (max-width: 1200px) {
-  .boat-megamenu-grid {
-    grid-template-columns: repeat(4, 1fr) !important;
-  }
-}
-
-@media (max-width: 900px) {
-  .boat-megamenu-grid {
-    grid-template-columns: repeat(3, 1fr) !important;
-  }
-}
-
 .boat-megamenu-card {
-  display: flex !important;
+  display: inline-flex !important;
   align-items: center !important;
-  justify-content: flex-start !important;
+  justify-content: center !important;
   gap: 12px !important;
-  padding: 6px 0 !important;
+  padding: 6px 14px !important;
   text-decoration: none !important;
   color: #121212 !important;
   transition: all 0.2s ease !important;
@@ -301,7 +293,7 @@ header.header,
 .boat-megamenu-card:hover {
   background: transparent !important;
   box-shadow: none !important;
-  transform: translateX(3px) !important;
+  transform: translateY(-2px) !important;
 }
 
 .boat-megamenu-avatar {
