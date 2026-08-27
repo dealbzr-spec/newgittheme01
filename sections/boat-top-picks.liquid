@@ -474,32 +474,44 @@
 
   .boat-pick-card__price-row {
     display: flex;
-    align-items: baseline;
+    align-items: center;
+    justify-content: space-between;
     gap: 4px;
-    flex-wrap: wrap;
+    width: 100%;
+    height: 20px;
     min-height: 20px;
     line-height: 1.2;
   }
 
+  .boat-pick-card__price-values {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
   .boat-pick-card__price {
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 800;
     color: #000000;
     font-family: 'Plus Jakarta Sans', sans-serif;
   }
 
   .boat-pick-card__compare-price {
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     color: #94a3b8;
     text-decoration: line-through;
     font-weight: 500;
   }
 
   .boat-pick-card__discount {
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     font-weight: 800;
     color: #00b853;
     font-family: 'Plus Jakarta Sans', sans-serif;
+    white-space: nowrap;
+    margin-left: auto;
   }
 
   .boat-pick-card__swatches {
@@ -509,8 +521,8 @@
     font-size: 0.7rem;
     font-weight: 700;
     color: #64748b;
-    height: 18px;
-    min-height: 18px; /* Dedicated height for 100% equal card sizing */
+    height: 20px;
+    min-height: 20px; /* Dedicated height for 100% equal card sizing */
   }
 
   .boat-swatch-dot {

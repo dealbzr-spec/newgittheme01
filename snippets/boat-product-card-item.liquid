@@ -119,13 +119,17 @@
 
     <div class="boat-pick-card__footer">
       <div class="boat-pick-card__price-row">
-        <span class="boat-pick-card__price">{{ price | money }}</span>
-        <span class="boat-pick-card__compare-price" style="{% unless compare_price > price %}display:none;{% endunless %}">
-          {% if compare_price > price %}{{ compare_price | money }}{% endif %}
-        </span>
-        <span class="boat-pick-card__discount" style="{% unless compare_price > price %}display:none;{% endunless %}">
-          {% if compare_price > price %}{{ discount_percent }}% off{% endif %}
-        </span>
+        <div class="boat-pick-card__price-values">
+          <span class="boat-pick-card__price">{{ price | money }}</span>
+          {% if compare_price > price %}
+            <span class="boat-pick-card__compare-price">{{ compare_price | money }}</span>
+          {% endif %}
+        </div>
+        {% if compare_price > price %}
+          <span class="boat-pick-card__discount">{{ discount_percent }}% off</span>
+        {% else %}
+          <span class="boat-pick-card__discount" style="visibility:hidden;">0% off</span>
+        {% endif %}
       </div>
 
       {% comment %} --- Dynamic Smart Swatches (Color Dots / Size Pills) --- {% endcomment %}
