@@ -1980,3 +1980,18 @@ a.boat-megamenu-card,
   display: flex !important;
   flex-direction: column !important;
 }
+
+/* Mobile Section Left and Right Spacing (Prevents Cards Touching Edges) */
+@media screen and (max-width: 749px) {
+  .product-grid-container,
+  .collection-wrapper,
+  .results-list,
+  .template-collection .section,
+  .template-search .section,
+  .collection__grid-container,
+  .collection {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    box-sizing: border-box !important;
+  }
+}
