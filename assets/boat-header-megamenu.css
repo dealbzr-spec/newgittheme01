@@ -1625,28 +1625,19 @@ a.boat-megamenu-card,
   gap: 20px 14px !important;
 }
 
-/* Card Container for Collection Pages, Search Results, & Sections */
+/* Card Container Outer Reset (Prevents Double Border Effect) */
 :is(.product-card, .product-grid__card, .resource-card, .predictive-search-results__card, .grid__item .card, .product-grid__item .product-card, .predictive-search-results__list-item) {
-  background: #ffffff !important;
-  border: 1px solid #e2e8f0 !important;
-  border-radius: 16px !important;
-  padding: 12px !important;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03) !important;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
-  box-sizing: border-box !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
   height: 100% !important;
   display: flex !important;
   flex-direction: column !important;
   justify-content: space-between !important;
   text-decoration: none !important;
   position: relative !important;
-  overflow: hidden !important;
-}
-
-:is(.product-card, .product-grid__card, .resource-card, .predictive-search-results__card, .grid__item .card, .product-grid__item .product-card, .predictive-search-results__list-item):hover {
-  transform: translateY(-3px) !important;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08) !important;
-  border-color: #cbd5e1 !important;
 }
 
 /* Product Card Media Container (Image Frame) */
@@ -1981,7 +1972,7 @@ a.boat-megamenu-card,
   flex-direction: column !important;
 }
 
-/* Mobile Section Left and Right Spacing (Prevents Cards Touching Edges) */
+/* Mobile Section Left and Right Spacing (5px Spacing as requested) */
 @media screen and (max-width: 749px) {
   .product-grid-container,
   .collection-wrapper,
@@ -1990,8 +1981,32 @@ a.boat-megamenu-card,
   .template-search .section,
   .collection__grid-container,
   .collection {
-    padding-left: 16px !important;
-    padding-right: 16px !important;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
     box-sizing: border-box !important;
   }
+}
+
+/* Search Page Modern Capsule Search Input (SS3) */
+.template-search .search-input,
+.template-search input[type="search"],
+.search-page-input,
+.results-list input[type="search"],
+.template-search__input,
+.search-input-wrapper input {
+  border-radius: 30px !important;
+  border: 1.5px solid #cbd5e1 !important;
+  padding: 12px 22px !important;
+  font-size: 0.95rem !important;
+  font-weight: 500 !important;
+  background: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+  outline: none !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.template-search .search-input:focus,
+.template-search input[type="search"]:focus {
+  border-color: #2563eb !important;
+  box-shadow: 0 2px 10px rgba(37, 99, 235, 0.12) !important;
 }
