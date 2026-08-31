@@ -1,0 +1,151 @@
+{%- doc -%}
+  Renders the boAt-inspired mobile navigation menu drawer.
+  @param {object} linklist - The Shopify menu linklist object
+  @param {object} [block_settings] - Block settings
+{%- enddoc -%}
+
+<div class="boat-mobile-drawer-wrapper">
+  {% liquid
+    assign categories_link = null
+    for link in linklist.links
+      assign link_title_downcase = link.title | downcase
+      if link_title_downcase contains 'category' or link_title_downcase contains 'categories' or link_title_downcase contains 'shop' or link_title_downcase contains 'product'
+        assign categories_link = link
+        break
+      endif
+    endfor
+
+    if categories_link == null and linklist.links.size > 0
+      for link in linklist.links
+        if link.links != blank
+          assign categories_link = link
+          break
+        endif
+      endfor
+    endif
+  %}
+
+  <!-- Top Categories Section -->
+  <details class="boat-mobile-categories-details" open>
+    <summary class="boat-mobile-categories-summary">
+      <span class="boat-mobile-categories-title">
+        {%- if categories_link != null -%}
+          {{ categories_link.title | escape }}
+        {%- else -%}
+          Categories
+        {%- endif -%}
+      </span>
+      <span class="boat-mobile-toggle-icon">
+        <svg class="boat-icon-minus" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        <svg class="boat-icon-plus" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+      </span>
+    </summary>
+
+    <div class="boat-mobile-categories-body">
+      <div class="boat-mobile-cat-grid" id="BoatMobileCategoryGrid">
+        {% liquid
+          assign category_items = null
+          if categories_link != null and categories_link.links != blank
+            assign category_items = categories_link.links
+          else
+            assign category_items = linklist.links
+          endif
+        %}
+
+        {% for item in category_items %}
+          <a href="{{ item.url }}" class="boat-mobile-cat-card{% if forloop.index > 9 %} boat-mobile-cat-card--hidden{% endif %}">
+            <div class="boat-mobile-cat-avatar">
+              {% liquid
+                assign has_img = false
+                assign img_src = ''
+                if item.type == 'collection_link' and item.object.featured_image
+                  assign img_src = item.object.featured_image | image_url: width: 160
+                  assign has_img = true
+                elsif item.type == 'collection_link' and item.object.products.first.featured_image
+                  assign img_src = item.object.products.first.featured_image | image_url: width: 160
+                  assign has_img = true
+                elsif item.type == 'product_link' and item.object.featured_image
+                  assign img_src = item.object.featured_image | image_url: width: 160
+                  assign has_img = true
+                endif
+              %}
+              {% if has_img %}
+                <img src="{{ img_src }}" alt="{{ item.title | escape }}" loading="lazy" width="80" height="80">
+              {% else %}
+                <span class="boat-mobile-cat-placeholder">
+                  {{ item.title | slice: 0, 1 | upcase }}
+                </span>
+              {% endif %}
+            </div>
+            <span class="boat-mobile-cat-title">{{ item.title | escape }}</span>
+          </a>
+        {% endfor %}
+      </div>
+
+      {% if category_items.size > 9 %}
+        <button type="button" class="boat-mobile-expand-btn" id="BoatMobileExpandBtn" aria-expanded="false">
+          <span class="boat-mobile-expand-text">Expand More</span>
+          <span class="boat-mobile-expand-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </span>
+        </button>
+      {% endif %}
+    </div>
+  </details>
+
+  <!-- Secondary List Items below Categories -->
+  <ul class="boat-mobile-list-menu" role="list">
+    {% for link in linklist.links %}
+      {% if categories_link != null and link.handle == categories_link.handle %}
+        {% continue %}
+      {% endif %}
+
+      <li class="boat-mobile-list-item-wrap">
+        {% if link.links != blank %}
+          <details class="boat-mobile-item-details">
+            <summary class="boat-mobile-list-item boat-mobile-list-item--summary">
+              <span class="boat-mobile-list-title">{{ link.title | escape }}</span>
+              <span class="boat-mobile-list-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              </span>
+            </summary>
+            <ul class="boat-mobile-sublist" role="list">
+              {% for childlink in link.links %}
+                <li>
+                  <a href="{{ childlink.url }}" class="boat-mobile-sublink">
+                    {{ childlink.title | escape }}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          </details>
+        {% else %}
+          <a href="{{ link.url }}" class="boat-mobile-list-item">
+            <span class="boat-mobile-list-title">{{ link.title | escape }}</span>
+            <span class="boat-mobile-list-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </span>
+          </a>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const expandBtn = document.getElementById('BoatMobileExpandBtn');
+    const catGrid = document.getElementById('BoatMobileCategoryGrid');
+    if (expandBtn && catGrid) {
+      expandBtn.addEventListener('click', function() {
+        const isExpanded = catGrid.classList.toggle('boat-mobile-cat-grid--expanded');
+        expandBtn.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+        const textSpan = expandBtn.querySelector('.boat-mobile-expand-text');
+        if (textSpan) {
+          textSpan.textContent = isExpanded ? 'Show Less' : 'Expand More';
+        }
+        expandBtn.classList.toggle('boat-mobile-expand-btn--active', isExpanded);
+      });
+    }
+  });
+</script>
