@@ -1576,11 +1576,15 @@ a.boat-megamenu-card,
   border-radius: 30px !important;
   padding: 10px 16px !important;
   gap: 10px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  cursor: pointer !important;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04) !important;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease !important;
 }
 
-.boat-mobile-drawer-search-input-wrap:focus-within {
+.boat-mobile-drawer-search-input-wrap:hover,
+.boat-mobile-drawer-search-input-wrap:active {
   border-color: #2563eb !important;
   box-shadow: 0 2px 10px rgba(37, 99, 235, 0.12) !important;
 }
@@ -1592,19 +1596,17 @@ a.boat-megamenu-card,
   color: #64748b !important;
 }
 
-.boat-mobile-drawer-search-input {
-  border: none !important;
-  background: transparent !important;
-  outline: none !important;
-  width: 100% !important;
+.boat-mobile-drawer-search-placeholder {
   font-size: 0.92rem !important;
   font-weight: 500 !important;
-  color: #0f172a !important;
+  color: #64748b !important;
   font-family: 'Plus Jakarta Sans', sans-serif !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
 }
 
-.boat-mobile-drawer-search-input::placeholder {
-  color: #64748b !important;
-  font-weight: 500 !important;
-  font-family: 'Plus Jakarta Sans', sans-serif !important;
+.boat-search-highlight {
+  font-weight: 700 !important;
+  color: #0f172a !important;
 }
