@@ -1438,10 +1438,11 @@ a.boat-megamenu-card,
 }
 
 .boat-mobile-featured-badge {
-  font-size: 0.92rem !important;
-  font-weight: 800 !important;
-  color: #0f172a !important;
+  font-size: 1.02rem !important;
+  font-weight: 700 !important;
+  color: #121212 !important;
   font-family: 'Plus Jakarta Sans', sans-serif !important;
+  letter-spacing: -0.01em !important;
 }
 
 .boat-mobile-featured-viewall {

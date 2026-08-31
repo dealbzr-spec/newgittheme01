@@ -137,23 +137,42 @@
     {% endfor %}
   </ul>
 
-  <!-- Bottom Featured Products / Trending Showcase Box -->
+  <!-- Bottom Dynamic Collection Featured Showcase Box -->
   {% liquid
-    assign featured_prods = collections.all.products
-    if collections['trending'].products.size > 0
-      assign featured_prods = collections['trending'].products
+    assign selected_collection = null
+    if block_settings.mobile_drawer_collection != blank
+      assign selected_collection = block_settings.mobile_drawer_collection
+    elsif collections['trending'].products.size > 0
+      assign selected_collection = collections['trending']
     elsif collections['frontpage'].products.size > 0
-      assign featured_prods = collections['frontpage'].products
+      assign selected_collection = collections['frontpage']
+    else
+      assign selected_collection = collections.all
+    endif
+
+    assign section_title = block_settings.mobile_drawer_collection_title
+    if section_title == blank
+      if selected_collection != null and selected_collection.title != blank
+        assign section_title = selected_collection.title
+      else
+        assign section_title = 'Trending Deals'
+      endif
+    endif
+
+    assign view_all_url = '/collections/all'
+    if selected_collection != null and selected_collection.url != blank
+      assign view_all_url = selected_collection.url
     endif
   %}
-  {% if featured_prods.size > 0 %}
+
+  {% if selected_collection != null and selected_collection.products.size > 0 %}
     <div class="boat-mobile-featured-box">
       <div class="boat-mobile-featured-header">
-        <span class="boat-mobile-featured-badge">🔥 Trending Deals</span>
-        <a href="/collections/all" class="boat-mobile-featured-viewall">View All &rarr;</a>
+        <span class="boat-mobile-featured-badge">{{ section_title | escape }}</span>
+        <a href="{{ view_all_url }}" class="boat-mobile-featured-viewall">View All &rarr;</a>
       </div>
       <div class="boat-mobile-featured-carousel">
-        {% for product in featured_prods limit: 4 %}
+        {% for product in selected_collection.products limit: 6 %}
           <a href="{{ product.url }}" class="boat-mobile-product-card">
             <div class="boat-mobile-product-img-wrap">
               {% if product.featured_image %}
