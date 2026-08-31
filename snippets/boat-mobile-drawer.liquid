@@ -36,8 +36,8 @@
         {%- endif -%}
       </span>
       <span class="boat-mobile-toggle-icon">
-        <svg class="boat-icon-minus" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-        <svg class="boat-icon-plus" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        <svg class="boat-icon-minus" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        <svg class="boat-icon-plus" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
       </span>
     </summary>
 
@@ -100,10 +100,16 @@
         {% continue %}
       {% endif %}
 
+      {% assign is_home = false %}
+      {% assign link_title_lc = link.title | downcase %}
+      {% if link_title_lc == 'home' or link.url == '/' or link.url == routes.root_url %}
+        {% assign is_home = true %}
+      {% endif %}
+
       <li class="boat-mobile-list-item-wrap">
         {% if link.links != blank %}
           <details class="boat-mobile-item-details">
-            <summary class="boat-mobile-list-item boat-mobile-list-item--summary">
+            <summary class="boat-mobile-list-item boat-mobile-list-item--summary{% if is_home %} boat-mobile-list-item--home{% endif %}">
               <span class="boat-mobile-list-title">{{ link.title | escape }}</span>
               <span class="boat-mobile-list-icon">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
@@ -120,7 +126,7 @@
             </ul>
           </details>
         {% else %}
-          <a href="{{ link.url }}" class="boat-mobile-list-item">
+          <a href="{{ link.url }}" class="boat-mobile-list-item{% if is_home %} boat-mobile-list-item--home{% endif %}">
             <span class="boat-mobile-list-title">{{ link.title | escape }}</span>
             <span class="boat-mobile-list-icon">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
@@ -130,6 +136,46 @@
       </li>
     {% endfor %}
   </ul>
+
+  <!-- Bottom Featured Products / Trending Showcase Box -->
+  {% liquid
+    assign featured_prods = collections.all.products
+    if collections['trending'].products.size > 0
+      assign featured_prods = collections['trending'].products
+    elsif collections['frontpage'].products.size > 0
+      assign featured_prods = collections['frontpage'].products
+    endif
+  %}
+  {% if featured_prods.size > 0 %}
+    <div class="boat-mobile-featured-box">
+      <div class="boat-mobile-featured-header">
+        <span class="boat-mobile-featured-badge">🔥 Trending Deals</span>
+        <a href="/collections/all" class="boat-mobile-featured-viewall">View All &rarr;</a>
+      </div>
+      <div class="boat-mobile-featured-carousel">
+        {% for product in featured_prods limit: 4 %}
+          <a href="{{ product.url }}" class="boat-mobile-product-card">
+            <div class="boat-mobile-product-img-wrap">
+              {% if product.featured_image %}
+                <img src="{{ product.featured_image | image_url: width: 240 }}" alt="{{ product.title | escape }}" loading="lazy" width="120" height="120">
+              {% else %}
+                <div class="boat-mobile-product-img-placeholder">Product</div>
+              {% endif %}
+            </div>
+            <div class="boat-mobile-product-details">
+              <span class="boat-mobile-product-title">{{ product.title | escape }}</span>
+              <div class="boat-mobile-product-price-row">
+                <span class="boat-mobile-product-price">{{ product.price | money }}</span>
+                {% if product.compare_at_price > product.price %}
+                  <span class="boat-mobile-product-compare">{{ product.compare_at_price | money }}</span>
+                {% endif %}
+              </div>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
 </div>
 
 <script>
