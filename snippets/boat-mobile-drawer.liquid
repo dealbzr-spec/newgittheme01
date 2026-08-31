@@ -191,24 +191,9 @@
       </div>
       <div class="boat-mobile-featured-carousel">
         {% for product in selected_collection.products limit: 6 %}
-          <a href="{{ product.url }}" class="boat-mobile-product-card">
-            <div class="boat-mobile-product-img-wrap">
-              {% if product.featured_image %}
-                <img src="{{ product.featured_image | image_url: width: 240 }}" alt="{{ product.title | escape }}" loading="lazy" width="120" height="120">
-              {% else %}
-                <div class="boat-mobile-product-img-placeholder">Product</div>
-              {% endif %}
-            </div>
-            <div class="boat-mobile-product-details">
-              <span class="boat-mobile-product-title">{{ product.title | escape }}</span>
-              <div class="boat-mobile-product-price-row">
-                <span class="boat-mobile-product-price">{{ product.price | money }}</span>
-                {% if product.compare_at_price > product.price %}
-                  <span class="boat-mobile-product-compare">{{ product.compare_at_price | money }}</span>
-                {% endif %}
-              </div>
-            </div>
-          </a>
+          <div class="boat-mobile-card-item-wrap" style="width: 165px; flex: 0 0 165px;">
+            {% render 'boat-product-card-item', product: product %}
+          </div>
         {% endfor %}
       </div>
     </div>
