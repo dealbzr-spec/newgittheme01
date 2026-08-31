@@ -2010,3 +2010,33 @@ a.boat-megamenu-card,
   border-color: #2563eb !important;
   box-shadow: 0 2px 10px rgba(37, 99, 235, 0.12) !important;
 }
+
+/* Predictive Search & Search Modal Grid Layout Reset (Prevents Giant Cards) */
+.predictive-search-results__products,
+.predictive-search-results__list,
+.predictive-search-results__wrapper-products,
+.search-modal .predictive-search-results__list {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 14px 10px !important;
+  width: 100% !important;
+}
+
+@media screen and (max-width: 749px) {
+  .predictive-search-results__products,
+  .predictive-search-results__list,
+  .predictive-search-results__wrapper-products,
+  .search-modal .predictive-search-results__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+.predictive-search-results__list-item,
+.predictive-search-results__card,
+.predictive-search-results__list-item:first-child,
+.predictive-search-results__card:first-child {
+  grid-column: span 1 !important;
+  grid-row: span 1 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
