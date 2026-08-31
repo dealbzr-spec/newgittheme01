@@ -1,21 +1,17 @@
 {%- doc -%}
-  Renders the predictive search products list for empty state and recently viewed products
-
+  Renders the predictive search products list using the exact boAt Product Card Design.
   @param {string} title - title of the result list
   @param {object[]} products - array of products
   @param {string[]} [order_ids] - array of product ids
   @param {number} [limit] - limit of products to display
-  @param {string} [products_test_id] - a playwright test id, used to differentiate empty state from 'real' search results
 {%- enddoc -%}
+
 {%- liquid
   assign recently_viewed_title_text = 'content.recently_viewed_products' | t
 -%}
 <div
   id="predictive-search-products"
   class="predictive-search-results__products"
-  {% if products_test_id %}
-    data-testid="{{ products_test_id }}"
-  {% endif %}
 >
   {% if title == recently_viewed_title_text %}
     <div
@@ -41,10 +37,6 @@
         {% liquid
           assign limit = limit | default: 8
         %}
-        {% comment %}
-          If we're searching for recently viewed products by id, we need to reorder the products.
-          The order here comes from the search terms, and we display the products in the order of the ids.
-        {% endcomment %}
         {% if order_ids != blank %}
           {% for _id in order_ids %}
             {% assign int_id = _id | times: 1 %}
@@ -53,14 +45,7 @@
               class="predictive-search-results__card predictive-search-results__card--product"
               ref="recentlyViewedItems[]"
             >
-              {% render 'resource-card',
-                resource_type: 'product',
-                resource: product,
-                image_width: 500,
-                image_hover: true,
-                image_aspect_ratio: '4 / 5',
-                product_view_context: 'search'
-              %}
+              {% render 'boat-product-card-item', product: product %}
             </li>
           {% endfor %}
         {% else %}
@@ -69,14 +54,7 @@
               class="predictive-search-results__card predictive-search-results__card--product"
               ref="recentlyViewedItems[]"
             >
-              {% render 'resource-card',
-                resource_type: 'product',
-                resource: product,
-                image_width: 500,
-                image_hover: true,
-                image_aspect_ratio: '4 / 5',
-                product_view_context: 'search'
-              %}
+              {% render 'boat-product-card-item', product: product %}
             </li>
           {% endfor %}
         {% endif %}
@@ -97,14 +75,7 @@
           class="predictive-search-results__card predictive-search-results__card--product"
           ref="resultsItems[]"
         >
-          {% render 'resource-card',
-            resource_type: 'product',
-            resource: product,
-            image_width: 500,
-            image_hover: true,
-            image_aspect_ratio: '4 / 5',
-            product_view_context: 'search'
-          %}
+          {% render 'boat-product-card-item', product: product %}
         </li>
       {% endfor %}
     </ul>

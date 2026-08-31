@@ -2011,15 +2011,16 @@ a.boat-megamenu-card,
   box-shadow: 0 2px 10px rgba(37, 99, 235, 0.12) !important;
 }
 
-/* Predictive Search & Search Modal Grid Layout Reset (Prevents Giant Cards) */
+/* Predictive Search & Search Modal Grid Layout Reset (Prevents Giant & Squished Cards) */
 .predictive-search-results__products,
 .predictive-search-results__list,
 .predictive-search-results__wrapper-products,
 .search-modal .predictive-search-results__list {
   display: grid !important;
-  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)) !important;
   gap: 14px 10px !important;
   width: 100% !important;
+  box-sizing: border-box !important;
 }
 
 @media screen and (max-width: 749px) {
@@ -2039,4 +2040,7 @@ a.boat-megamenu-card,
   grid-row: span 1 !important;
   width: 100% !important;
   max-width: 100% !important;
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
