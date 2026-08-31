@@ -1961,3 +1961,22 @@ a.boat-megamenu-card,
   color: #00b853 !important; /* boAt vibrant green discount color */
   font-family: 'Plus Jakarta Sans', sans-serif !important;
 }
+
+/* Product Grid Items Reset for Site-Wide boAt Cards */
+.product-grid__item,
+.grid__item,
+.results-list .product-grid__item {
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.product-grid__item > product-card,
+.product-grid__item > .product-card,
+.product-grid__item > .boat-pick-card,
+.results-list .boat-pick-card {
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
